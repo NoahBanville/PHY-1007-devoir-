@@ -58,27 +58,63 @@ def champ_charges(charges:list[Charge]):
    P = np.sqrt(Ex**2 + Ey**2) # magnitude du champ
    return X, Y, Ex, Ey, P
 
-def affiche_E(charges:list[Charge],title="",saveName=None):
+def affiche_graph(charges:list[Charge],title="",saveName=None):
     """ calcul et affiche le champ """
     X, Y, Ex, Ey, P = champ_charges(charges)
    
-    #Construisons la figure
-    fig, ax = plt.subplots(figsize=(8,6))
+    #Construisons la figure des lignes de champs
+    fig, (ax1, ax2) = plt.subplots(1,2, figsize=(16,6))
     
-    pax = ax.streamplot(X, Y, Ex, Ey, color=np.log(P), density=1.2 ,linewidth=2,\
+    pax = ax1.streamplot(X, Y, Ex, Ey, color=np.log(P), density=1.2 ,linewidth=2,\
                        cmap="winter", arrowsize=1.)
     for c in charges:
-        ax.add_patch(plt.Circle((c.x, c.y), radius=0.05, color='k',zorder=20))
-    ax.set_xlim([-1,5])
-    ax.set_ylim([-2,2])
-    ax.set_xlabel(r'$x$')
-    ax.set_ylabel(r'$y$')
-    ax.set_aspect('equal')
-    plt.title(title)
+        ax1.add_patch(plt.Circle((c.x, c.y), radius=0.05, color='k',zorder=20))
+    ax1.set_xlim([-1,5])
+    ax1.set_ylim([-2,2])
+    ax1.set_xlabel(r'$x$')
+    ax1.set_ylabel(r'$y$')
+    ax1.set_aspect('equal')
+    ax1.set_title("Lignes de champ des charges")
+    
+    #figure de la magnétidue du champ selon x
+    x_val, magnitude_val = magnitude_x(charges)
+    ax2.plot(x_val, magnitude_val)
+    ax2.set_xlabel(r'$x$')
+    ax2.set_ylabel(r'Magnitude du champ électrique')
+    ax2.set_title('Magnitude du champ électrique selon x')
+    
+    # Afficher la figure combinée
+    plt.tight_layout()
+    
     if saveName:
-        f = plt.savefig(saveName)
+        plt.savefig(saveName)
     plt.show()
 # %%
+def magnitude_x(charges, y=0, z=0):
+    """Calcul de la magnitude du champ électrique en fonction de x."""
+    x_val = np.linspace(0, 5, 200)
+    magnitude_val = np.zeros_like(x_val)
+
+    for i, x in enumerate(x_val):
+        Ex, Ey = 0, 0
+        for charge in charges:
+            I, J = calcul_E(x, y, charge)
+            Ex += I
+            Ey += J
+        magnitude_val[i] = np.sqrt(Ex**2 + Ey**2)
+
+    return x_val, magnitude_val
+
 
 c = [Charge((2.5,1.8),1.5), Charge((0,1.2),0.3), Charge((2,-1.5),0.5), Charge((0.6,-1.2),-0.5)]
-affiche_E(c)
+
+#affiche les graphs
+affiche_graph(c)
+
+
+
+
+
+
+
+
