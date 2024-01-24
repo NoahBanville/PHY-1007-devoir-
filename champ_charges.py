@@ -65,8 +65,8 @@ def affiche_E(charges:list[Charge],title="",saveName=None):
     #Construisons la figure
     fig, ax = plt.subplots(figsize=(8,6))
     
-    pax = ax.streamplot(X, Y, Ex, Ey, color=np.log(P), density=0.9 ,linewidth=2,\
-                       cmap="winter", arrowsize=2.)
+    pax = ax.streamplot(X, Y, Ex, Ey, color=np.log(P), density=0.8 ,linewidth=2,\
+                       cmap="winter", arrowsize=1.)
     for c in charges:
         ax.add_patch(plt.Circle((c.x, c.y), radius=0.05, color='k',zorder=20))
     ax.set_xlim([-1,5])
@@ -80,5 +80,5 @@ def affiche_E(charges:list[Charge],title="",saveName=None):
     plt.show()
 # %%
 
-c = [Charge((0,1.2),0.3), Charge((0.6,-1.2),-5), Charge((2,-1.5),0.5), Charge((2.5,1.8),1.5)]
+c = [Charge((0,1.2),0.3), Charge((2,-1.5),0.5), Charge((0.6,-1.2),-5),  Charge((2.5,1.8),1.5)]
 affiche_E(c)
