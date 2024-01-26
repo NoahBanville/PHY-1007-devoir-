@@ -64,8 +64,28 @@ def magnitude_x(charges, y=0, z=0):
             Ex += I
             Ey += J
         magnitude_val[i] = np.sqrt(Ex**2 + Ey**2)
-
     return x_val, magnitude_val
+
+def trouver_max_min(magnitude_val):
+    """On commence par trouver la dérivée de notre courbe"""
+    derive = np.diff(magnitude_val)
+
+    """On la passe ensuite dans la fonction sign pour réduire les gros chiffres"""
+    derive = np.sign(derive)
+    
+    """Par la suite, nous exécutons l'opération derive[n+1]-derive[n] pour identifier les maximums et minimums"""
+    pos_max_min = []
+    for i in range(398):
+        if derive[i + 1] - derive[i] != 0:
+            pos_max_min.append(i)
+    
+    """Puisque nous avons les positions des minimas et maximas dans notre tableau, il est facile de savoir leur position entre 0 et 5 centimètres"""
+    max_min = []
+    for i in pos_max_min:
+        max_min.append((5/400) * i)
+    
+    return max_min
+
 
 def affiche_graph(charges:list[Charge],title="",saveName=None):
     """ calcul et affiche le champ """
@@ -102,6 +122,8 @@ def affiche_graph(charges:list[Charge],title="",saveName=None):
 
 #charges utilisées pour l'exercice
 c = [Charge((2.5,1.8),1.5), Charge((0,1.2),0.3), Charge((2,-1.5),0.5), Charge((0.6,-1.2),-0.5)]
+
+trouver_max_min(magnitude_x(c)[1])
 
 #affiche les 2 graphs
 affiche_graph(c)
