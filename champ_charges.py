@@ -78,6 +78,7 @@ def affiche_graph(charges:list[Charge],title="",saveName=None):
                        cmap="winter", arrowsize=1.)
     for c in charges:
         ax1.add_patch(plt.Circle((c.x, c.y), radius=0.05, color='k',zorder=20))
+        
     ax1.set_xlim([-1,5])
     ax1.set_ylim([-2,2])
     ax1.set_xlabel(r'$x$')
