@@ -86,10 +86,16 @@ def trouver_max_min(magnitude_val):
     
     return max_min
 
+#charges utilisées pour l'exercice
+c = [Charge((2.5,1.8),1.5), Charge((0,1.2),0.3), Charge((2,-1.5),0.5), Charge((0.6,-1.2),-0.5)]
+
+#string utilisé pour afficher les extremums sous les graphiques
+extremums = ' cm,  x = '.join(map(str,(trouver_max_min(magnitude_x(c)[1]))))
 
 def affiche_graph(charges:list[Charge],title="",saveName=None):
     """ calcul et affiche le champ """
     X, Y, Ex, Ey, P = champ_charges(charges)
+    
    
     # figure des lignes de champs
     fig, (ax1, ax2) = plt.subplots(1,2, figsize=(16,6))
@@ -112,6 +118,8 @@ def affiche_graph(charges:list[Charge],title="",saveName=None):
     ax2.set_xlabel(r'$x$')
     ax2.set_ylabel(r'Magnitude du champ électrique')
     ax2.set_title('Magnitude du champ électrique selon x')
+    #affiche extremums sous le graphique de magnétude
+    ax2.text(0, 30,"Extremums: x = "+(extremums)+' cm' , style='italic')
     
     # Afficher la figure combinée
     plt.tight_layout()
@@ -120,10 +128,8 @@ def affiche_graph(charges:list[Charge],title="",saveName=None):
         plt.savefig(saveName)
     plt.show()
 
-#charges utilisées pour l'exercice
-c = [Charge((2.5,1.8),1.5), Charge((0,1.2),0.3), Charge((2,-1.5),0.5), Charge((0.6,-1.2),-0.5)]
 
-trouver_max_min(magnitude_x(c)[1])
+
 
 #affiche les 2 graphs
 affiche_graph(c)
