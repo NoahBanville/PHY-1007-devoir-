@@ -41,7 +41,7 @@ A = 0.1
 E = 0.5
 def integrand(x, a):
    return np.absolute(a*np.cos(10 * np.sqrt(2) * x))
-for i in range(96): 
+for i in range(64): 
    Ef = 0.981 * (quad(integrand, 0, np.pi/16, args=(A)))[0]
    E = E - Ef
    A = np.sqrt((E*2)/100)
