@@ -9,10 +9,6 @@ from numpy.polynomial import legendre
 from matplotlib import pyplot as plt
 from matplotlib import rcParams
 
-
-from scipy.integrate import quad
-
-
 vect3D: TypeAlias = (float, float, float)
 class Charge:
    def __init__(self,position:vect3D,charge:float):
@@ -33,17 +29,3 @@ c = [Charge((5, 5, 0), 1.0), Charge((-5, 5, 0), -1.0), Charge((5, -5, 0), -1.0),
 
 def exp_multipolaire():
    pass
-      
-
-
-#Devoir d'onde : 
-A = 0.1
-E = 0.5
-def integrand(x, a):
-   return np.absolute(a*np.cos(10 * np.sqrt(2) * x))
-for i in range(64): 
-   Ef = 0.981 * (quad(integrand, 0, np.pi/16, args=(A)))[0]
-   E = E - Ef
-   A = np.sqrt((E*2)/100)
-   if (i+1)*(1/16) %1 == 0 : 
-      print("(",  (i+1)*(1/16), "pi, ", A, ")")
