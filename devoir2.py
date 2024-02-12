@@ -17,12 +17,12 @@ class Charge:
       self.z = position[2]
       self.q = charge
       
-"""def potentiel_E(x, y, z, charges):
+def potentiel_E(x, y, z, charges):
     potentiel = 0
     for charge in charges:
         r = np.sqrt((x - charge.x)**2 + (y - charge.y)**2 + (z - charge.z)**2)
         potentiel += charge.q / (4 * pi * epsilon_0 * r)
-    return potentiel"""
+    return potentiel
 
 #charges utilisées pour l'exercice
 c = [Charge((5, 5, 0), 1.0), Charge((-5, 5, 0), -1.0), Charge((5, -5, 0), -1.0), Charge((-5, -5, 0), 1.0)]
