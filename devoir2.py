@@ -28,4 +28,4 @@ def potentiel_E(x, y, z, charges):
 c = [Charge((5, 5, 0), 1.0), Charge((-5, 5, 0), -1.0), Charge((5, -5, 0), -1.0), Charge((-5, -5, 0), 1.0)]
 
 def exp_multipolaire():
-   pass
+   pass   
