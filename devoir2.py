@@ -16,7 +16,12 @@ class Charge:
       self.y = position[1]
       self.z = position[2]
       self.q = charge
-      
+
+def exp_multipolaire(x, y, z, c):
+    pot = [0, 0, 0, 0, 0, 0, 0]
+
+    return pot
+
 def potentiel_E(x, y, z, charges):
     potentiel = 0
     for charge in charges:
@@ -27,5 +32,6 @@ def potentiel_E(x, y, z, charges):
 #charges utilisées pour l'exercice
 c = [Charge((5, 5, 0), 1.0), Charge((-5, 5, 0), -1.0), Charge((5, -5, 0), -1.0), Charge((-5, -5, 0), 1.0)]
 
-def exp_multipolaire():
-   pass   
+
+
+print(exp_multipolaire(23, 32, 50, c))
