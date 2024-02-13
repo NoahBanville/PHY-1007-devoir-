@@ -30,7 +30,7 @@ def exp_multipolaire(x, y, z, c):
             pot[i] *= ((np.sqrt(k.x**2 + k.y**2 + k.z**2))**i) * (legendre.legval(angle, n)) * k.q
         pot[i] *= (1/(4*np.pi*epsilon_0))
         pot[6] += pot[i]
-    #Les 6 première cases du tableau sont les expansions pour n=0, 1, 2, 3, 4, 5 et la dernière case est la somme des 6. 
+    #Les 6 première cases du tableau sont les expansions pour n=0, 1, 2, 3, 4, 5 et la dernière case est la somme des 6.
     return pot
 
 def potentiel_E(x, y, z, charges):
@@ -41,4 +41,4 @@ def potentiel_E(x, y, z, charges):
     return potentiel
 
 #charges utilisées pour l'exercice
-c = [Charge((5, 5, 0), 1.0), Charge((-5, 5, 0), -1.0), Charge((5, -5, 0), -1.0), Charge((-5, -5, 0), 1.0)]
+c = [Charge((5*((10)**(-9)), 5*((10)**(-9)), 0), 1.0*((10)**(-12))), Charge((-5*((10)**(-9)), 5*((10)**(-9)), 0), -1.0*((10)**(-12))), Charge((5*((10)**(-9)), -5*((10)**(-9)), 0), -1.0*((10)**(-12))), Charge((-5*((10)**(-9)), -5*((10)**(-9)), 0), 1.0*((10)**(-12)))]
