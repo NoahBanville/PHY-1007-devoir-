@@ -40,5 +40,25 @@ def potentiel_E(x, y, z, charges):
         potentiel += charge.q / (4 * pi * epsilon_0 * r)
     return potentiel
 
+def affiche_graph(c):
+    plt.style.use('_mpl-gallery-nogrid')
+
+    # make data
+    X, Y = np.meshgrid(np.arange(51), np.arange(51))
+    Z = np.zeros((51, 51))
+    for i in range(50):
+        for j in range(50):
+            Z[i][j] = exp_multipolaire(X[i+1][i+1], Y[j+1][j+1], 0, c)[0]
+    levels = np.linspace(Z.min(), Z.max(), 50)
+
+    # plot
+    fig, ax = plt.subplots()
+
+    ax.contourf(X, Y, Z, levels=levels)
+
+    plt.show()
+    
 #charges utilisées pour l'exercice
 c = [Charge((5*((10)**(-9)), 5*((10)**(-9)), 0), 1.0*((10)**(-12))), Charge((-5*((10)**(-9)), 5*((10)**(-9)), 0), -1.0*((10)**(-12))), Charge((5*((10)**(-9)), -5*((10)**(-9)), 0), -1.0*((10)**(-12))), Charge((-5*((10)**(-9)), -5*((10)**(-9)), 0), 1.0*((10)**(-12)))]
+
+affiche_graph(c)
