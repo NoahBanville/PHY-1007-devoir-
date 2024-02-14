@@ -37,7 +37,7 @@ def exp_multipolaire(x, y, z, c):
 
 
 def affiche_graph(c):
-    plt.style.use('_mpl-gallery-nogrid')
+    #plt.style.use('_mpl-gallery-nogrid')
 
     # make data
     X, Y = np.meshgrid(np.arange(-100, 101), np.arange(-100, 101))
@@ -60,12 +60,12 @@ def affiche_graph(c):
     
 #charges utilisées pour l'exercice
 
-#je pense que c'est plus lourd si on écrit les charges en m. c'est mieux de garder ça en nm
+
 c = [
 Charge((5*(10**(-9)), 5*(10**(-9)), 0), 1.0*(10**(-12))), 
      Charge((-5*(10**(-9)), 5*(10**(-9)), 0), -1.0*(10**(-12))),
      Charge((5*(10**(-9)), -5*(10**(-9)), 0), -1.0*(10**(-12))), 
-     Charge((-5*(10**(-9)), -5*(10**(-9)), 0), 1.0*(10**(-12)))
+     Charge((-5*(10**(-9)), -5*(10**(-9)), 0), 1.0)
      ]
 
 print(exp_multipolaire(43*(10**(-9)), 23*(10**(-9)), 50*(10**(-9)), c))
