@@ -20,14 +20,12 @@ class Charge:
 
 def exp_multipolaire(x, y, z, c):
     pot = np.zeros(7)
-    
     for i in range(6):
         n = np.zeros(6)
         n[i] = 1
         for k in c:
             angle = (k.x*x + k.y*y + k.z*z)/(sqrt(k.x**2 + k.y**2 + k.z**2)*sqrt(x**2 + y**2 + z**2))
-            legendre_terme = legendre.legval(angle, n, tensor=True)
-            pot[i] += k.q * legendre_terme * (sqrt(np.absolute(k.x)**2 + np.absolute(k.y)**2 + np.absolute(k.z) **2))**i
+            pot[i] += k.q * legendre.legval(angle, n, tensor=True) * (sqrt(np.absolute(k.x)**2 + np.absolute(k.y)**2 + np.absolute(k.z) **2))**i
         
         pot[i] *= (1/(4*pi*epsilon_0)) * (1/(sqrt(np.absolute(x)**2 + np.absolute(y)**2 + np.absolute(z)**2))**(i+1))
         pot[6] += pot[i]
@@ -43,7 +41,7 @@ def affiche_graph(c):
     Z = np.zeros((201, 201))
     for i in np.arange(-100, 101):
         for j in np.arange(-100, 101):
-            Z[i][j] = exp_multipolaire(i*(10**(-9)), j*(10**(-9)), 50*(10**(-9)), c)[1]
+            Z[i][j] = exp_multipolaire(i*(10**(-9)), j*(10**(-9)), 50*(10**(-9)), c)[0]
     levels = np.linspace(Z.min(), Z.max(), 100)
 
     # plot
@@ -66,5 +64,5 @@ Charge((5*(10**(-9)), 5*(10**(-9)), 0), 1.0*(10**(-12))),
      Charge((-5*(10**(-9)), -5*(10**(-9)), 0), 1.0*(10**(-12)))
      ]
 
-print(exp_multipolaire(43*(10**(-9)), 23*(10**(-9)), 50*(10**(-9)), c))
-#affiche_graph(c)
+#print(exp_multipolaire(43*(10**(-9)), 23*(10**(-9)), 50*(10**(-9)), c))
+affiche_graph(c)
