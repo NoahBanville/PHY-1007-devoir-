@@ -27,9 +27,9 @@ def exp_multipolaire(x, y, z, c):
         for k in c:
             angle = (k.x*x + k.y*y + k.z*z)/(sqrt(k.x**2 + k.y**2 + k.z**2)*sqrt(x**2 + y**2 + z**2))
             legendre_terme = legendre.legval(angle, n, tensor=True)
-            pot[i] += k.q * legendre_terme * (sqrt(k.x**2 + k.y**2 + k.z **2))**i
+            pot[i] += k.q * legendre_terme * (sqrt(np.absolute(k.x)**2 + np.absolute(k.y)**2 + np.absolute(k.z) **2))**i
         
-        pot[i] *= (1/(4*pi*epsilon_0)) * (1/(sqrt(x**2 + y**2 + z**2))**(i+1))
+        pot[i] *= (1/(4*pi*epsilon_0)) * (1/(sqrt(np.absolute(x)**2 + np.absolute(y)**2 + np.absolute(z)**2))**(i+1))
         pot[6] += pot[i]
     #Les 6 première cases du tableau sont les expansions pour n = 0, 1, 2, 3, 4, 5 et la dernière case est la somme des 6.
     return pot
@@ -43,7 +43,7 @@ def affiche_graph(c):
     Z = np.zeros((201, 201))
     for i in np.arange(-100, 101):
         for j in np.arange(-100, 101):
-            Z[i][j] = exp_multipolaire(i*(10**(-9)), j*(10**(-9)), 50*(10**(-9)), c)[3]
+            Z[i][j] = exp_multipolaire(i*(10**(-9)), j*(10**(-9)), 50*(10**(-9)), c)[1]
     levels = np.linspace(Z.min(), Z.max(), 100)
 
     # plot
