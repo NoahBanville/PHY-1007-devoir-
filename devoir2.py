@@ -19,18 +19,20 @@ class Charge:
       self.q = charge
 
 def exp_multipolaire(x, y, z, c):
-    pot = [0, 0, 0, 0, 0, 0, 0]
+    pot = np.zeros(7)
     
     for i in range(6):
-        pot[i] += (1/(np.sqrt(x**2 + y**2 + z**2))**(i+1))
-        n = [0, 0, 0, 0, 0, 0]
+        n = np.zeros(6)
         n[i] = 1
+        A = 0
         for k in c:
             angle = (k.x*x + k.y*y + k.z*z)/(math.sqrt(k.x**2 + k.y**2 + k.z**2)*math.sqrt(x**2 + y**2 + z**2))
-            pot[i] *= ((np.sqrt(k.x**2 + k.y**2 + k.z**2))**i) * (legendre.legval(angle, n)) * k.q
+            legendre_terme = legendre.legval(angle, n)
+            pot[i] += k.q * legendre_terme * (1/(np.sqrt(x**2 + y**2 + z**2))**(i+1)) * (np.sqrt(k.x**2 + k.y**2 + k.z **2))**i
+            
         pot[i] *= (1/(4*np.pi*epsilon_0))
         pot[6] += pot[i]
-    #Les 6 première cases du tableau sont les expansions pour n=0, 1, 2, 3, 4, 5 et la dernière case est la somme des 6.
+    #Les 6 première cases du tableau sont les expansions pour n = 0, 1, 2, 3, 4, 5 et la dernière case est la somme des 6.
     return pot
 
 def potentiel_E(x, y, z, charges):
@@ -44,21 +46,26 @@ def affiche_graph(c):
     plt.style.use('_mpl-gallery-nogrid')
 
     # make data
-    X, Y = np.meshgrid(np.arange(51), np.arange(51))
-    Z = np.zeros((51, 51))
-    for i in range(50):
-        for j in range(50):
-            Z[i][j] = exp_multipolaire(X[i+1][i+1], Y[j+1][j+1], 0, c)[0]
-    levels = np.linspace(Z.min(), Z.max(), 50)
+    X, Y = np.meshgrid(np.arange(-100, 101), np.arange(-100, 101))
+    Z = np.zeros((201, 201))
+    for i in np.arange(-100, 101):
+        for j in np.arange(-100, 101):
+            Z[i][j] = exp_multipolaire(i*(10**(-9)), j*(10**(-9)), 50*(10**(-9)), c)[4]
+    levels = np.linspace(Z.min(), Z.max(), 100)
 
     # plot
-    fig, ax = plt.subplots()
+    fig, ax1= plt.subplots(layout='constrained')
 
-    ax.contourf(X, Y, Z, levels=levels)
+    cs = ax1.contourf(X, Y, Z, levels=levels)
+    cbar = fig.colorbar(cs)
+
+    ax1.set_xlabel("x [nm]")
+    ax1.set_ylabel("y [nm]")
 
     plt.show()
     
 #charges utilisées pour l'exercice
-c = [Charge((5*((10)**(-9)), 5*((10)**(-9)), 0), 1.0*((10)**(-12))), Charge((-5*((10)**(-9)), 5*((10)**(-9)), 0), -1.0*((10)**(-12))), Charge((5*((10)**(-9)), -5*((10)**(-9)), 0), -1.0*((10)**(-12))), Charge((-5*((10)**(-9)), -5*((10)**(-9)), 0), 1.0*((10)**(-12)))]
+c = [Charge((5*(10**(-9)), 5*(10**(-9)), 0), 1.0*(10**(-12))), Charge((-5*(10**(-9)), 5*(10**(-9)), 0), -1.0*(10**(-12))), Charge((5*(10**(-9)), -5*(10**(-9)), 0), -1.0*(10**(-12))), Charge((-5*(10**(-9)), -5*(10**(-9)), 0), 1.0*(10**(-12)))]
 
-affiche_graph(c)
+print(exp_multipolaire(43*(10**(-9)), 23*(10**(-9)), 50*(10**(-9)), c))
+#affiche_graph(c)
