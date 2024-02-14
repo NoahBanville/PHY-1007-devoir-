@@ -8,7 +8,7 @@ from scipy.constants import epsilon_0
 from numpy.polynomial import legendre
 from matplotlib import pyplot as plt
 from matplotlib import rcParams
-#import math
+import math
 
 vect3D: TypeAlias = (float, float, float)
 class Charge:
@@ -31,7 +31,7 @@ def exp_multipolaire(x, y, z, c):
         pot[6] += pot[i]
     #Les 6 première cases du tableau sont les expansions pour n = 0, 1, 2, 3, 4, 5 et la dernière case est la somme des 6.
     return pot
-
+####
 
 
 def affiche_graph(c):
