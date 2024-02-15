@@ -8,7 +8,7 @@ from scipy.constants import epsilon_0
 from numpy.polynomial import legendre
 from matplotlib import pyplot as plt
 from matplotlib import rcParams
-#import math
+import math
 
 vect3D: TypeAlias = (float, float, float)
 class Charge:
@@ -18,26 +18,20 @@ class Charge:
 
 def exp_multipolaire(x, y, z, c):
     pot = np.zeros(7)
-    xyz_norm = np.linalg.norm([x, y, z])
     
     for i in range(6):
         n = np.zeros(6)
         n[i] = 1
+        for k in c:
+            angle = (k.x*x + k.y*y + k.z*z)/(sqrt(k.x**2 + k.y**2 + k.z**2)*sqrt(x**2 + y**2 + z**2))
+            legendre_terme = legendre.legval(angle, n, tensor=True)
+            pot[i] += k.q * legendre_terme * (sqrt(np.absolute(k.x)**2 + np.absolute(k.y)**2 + np.absolute(k.z) **2))**i
         
-        legendre_values = legendre.legval(
-            np.sum(np.array([k.position for k in c]) * [x, y, z], axis=1) /
-            (np.linalg.norm([k.position for k in c], axis=1) * xyz_norm),
-            n,
-            tensor=True
-        )
-        
-        pot[i] = np.sum([charge.q * legendre_value * np.linalg.norm(charge.position)**i for charge, legendre_value in zip(c, legendre_values)])
-        
-    pot[:6] *= (1 / (4 * pi * epsilon_0)) * (1 / xyz_norm**(np.arange(1, 7)))
-    pot[6] = np.sum(pot[:6])
-    
+        pot[i] *= (1/(4*pi*epsilon_0)) * (1/(sqrt(np.absolute(x)**2 + np.absolute(y)**2 + np.absolute(z)**2))**(i+1))
+        pot[6] += pot[i]
+    #Les 6 première cases du tableau sont les expansions pour n = 0, 1, 2, 3, 4, 5 et la dernière case est la somme des 6.
     return pot
-
+####
 
 
 def affiche_graph(c):
@@ -48,28 +42,27 @@ def affiche_graph(c):
 
     for i in range(1,6):
         for j in np.arange(-100, 101):
-            for k in np.arange(-100, 101):
-                Z[j][k][i] = exp_multipolaire(j*(10**(-9)), k*(10**(-9)), 50*(10**(-9)), c)[i]
+            Z[i][j] = exp_multipolaire(i*(10**(-9)), j*(10**(-9)), 50*(10**(-9)), c)[1]
+    levels = np.linspace(Z.min(), Z.max(), 100)
 
-        levels = np.linspace(Z[:, :, i].min(), Z[:, :, i].max(), 100)
-        ax = axs[i // 3][i % 3]
-        cs = ax.contourf(X, Y, Z[:, :, i], levels=levels)
-        fig.colorbar(cs, ax=ax)
-        ax.set_xlabel("X [nm]")
-        ax.set_ylabel("Y [nm]")
-        ax.set_title(f"Terme {i}")
+    # plot
+    fig, ax1= plt.subplots(layout='constrained')
 
-    fig.suptitle("Figures pour les termes de l’expansion multipolaire dans le plan x-y quand z = 50 nm")
+    cs = ax1.contourf(X, Y, Z, levels=levels)
+    cbar = fig.colorbar(cs)
+
+    ax1.set_xlabel("X [nm]")
+    ax1.set_ylabel("Y [nm]")
+
     plt.show()
     
 #charges utilisées pour l'exercice
 c = [
-    Charge((5e-9, 5e-9, 0), 1.0e-12),
-    Charge((-5e-9, 5e-9, 0), -1.0e-12),
-    Charge((5e-9, -5e-9, 0), -1.0e-12),
-    Charge((-5e-9, -5e-9, 0), 1.0e-12)
-]
-print(exp_multipolaire(43e-9, 23e-9, 50e-9, c))
+Charge((5*(10**(-9)), 5*(10**(-9)), 0), 1.0*(10**(-12))), 
+     Charge((-5*(10**(-9)), 5*(10**(-9)), 0), -1.0*(10**(-12))),
+     Charge((5*(10**(-9)), -5*(10**(-9)), 0), -1.0*(10**(-12))), 
+     Charge((-5*(10**(-9)), -5*(10**(-9)), 0), 1.0*(10**(-12)))
+     ]
 
-#prends plus de temps car les 6 graphs affichent dans la meme fenetre
-affiche_graph(c)
+print(exp_multipolaire(43*(10**(-9)), 23*(10**(-9)), 50*(10**(-9)), c))
+#affiche_graph(c)
