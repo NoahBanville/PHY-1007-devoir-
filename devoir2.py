@@ -35,9 +35,9 @@ def exp_multipolaire(x, y, z, c):
 
 
 def affiche_graph(c):
-    fig, axs = plt.subplots(2, 3, figsize=(10, 15)) 
+    fig, axs = plt.subplots(2, 3, figsize=(12, 8), gridspec_kw={'hspace': 0.3, 'wspace': 0.2}, sharex='col', sharey='row')
     fig.suptitle("Figures des premiers termes de l'expansion multipolaire", fontsize=16)
-     # Crée une grille de sous-graphiques 3x2
+     # Crée une grille de sous-graphiques 2x3
     
     for i, ax in enumerate(axs.flat):  # Itère sur les sous-graphiques
         X, Y = np.meshgrid(np.arange(-100, 101), np.arange(-100, 101))
