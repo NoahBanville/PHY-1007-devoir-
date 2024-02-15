@@ -65,5 +65,5 @@ c = [
     Charge((-5e-9, -5e-9, 0), 1.0e-12)
 ]
 
-print(exp_multipolaire(43e-9, 23e-9, 50e-9, c))
+#print(exp_multipolaire(43e-9, 23e-9, 50e-9, c))
 affiche_graph(c)  # il faut être patient, les 6 graphs affichent en mm temps...
