@@ -35,25 +35,27 @@ def exp_multipolaire(x, y, z, c):
 
 
 def affiche_graph(c):
+    fig, axs = plt.subplots(2, 3, figsize=(10, 15)) 
+    fig.suptitle("Figures des premiers termes de l'expansion multipolaire", fontsize=16)
+     # Crée une grille de sous-graphiques 3x2
+    
+    for i, ax in enumerate(axs.flat):  # Itère sur les sous-graphiques
+        X, Y = np.meshgrid(np.arange(-100, 101), np.arange(-100, 101))
+        Z = np.zeros((201, 201))
+        for j in range(-100, 101):
+            for k in range(-100, 101):
+                Z[j+100][k+100] = exp_multipolaire(j*(10**(-9)), k*(10**(-9)), 50*(10**(-9)), c)[i+1]  # Utilise i pour accéder à chaque terme de l'expansion
+        levels = np.linspace(Z.min(), Z.max(), 100)
+        cs = ax.contourf(X, Y, Z, levels=levels)
+        ax.set_title(f'Terme {i+1}')
+        fig.colorbar(cs, ax=ax)
+        ax.set_xlabel("X [nm]")
+        ax.set_ylabel("Y [nm]")
 
-    # make data
-    X, Y = np.meshgrid(np.arange(-100, 101), np.arange(-100, 101))
-    Z = np.zeros((201, 201))
-    for i in np.arange(-100, 101):
-        for j in np.arange(-100, 101):
-            Z[j][i] = exp_multipolaire(i*(10**(-9)), j*(10**(-9)), 50*(10**(-9)), c)[2]
-    levels = np.linspace(Z.min(), Z.max(), 100)
-
-    # plot
-    fig, ax1= plt.subplots(layout='constrained')
-
-    cs = ax1.contourf(X, Y, Z, levels=levels)
-    cbar = fig.colorbar(cs)
-
-    ax1.set_xlabel("X [nm]")
-    ax1.set_ylabel("Y [nm]")
-
+    plt.tight_layout()  # Ajuste automatiquement l'espacement entre les sous-graphiques
     plt.show()
+
+
     
 # Charges used for the exercise
 c = [
@@ -64,4 +66,4 @@ c = [
 ]
 
 print(exp_multipolaire(43e-9, 23e-9, 50e-9, c))
-affiche_graph(c)  # Uncomment to display the graph
+affiche_graph(c)  # il faut être patient, les 6 graphs affichent en mm temps...
