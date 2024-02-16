@@ -50,7 +50,6 @@ def affiche_graph_a1(c,saveName=None):
         for j in range(-100, 101):
             for k in range(-100, 101):
                 Z[j+100][k+100] = exp_multipolaire(j*(10**(-9)), k*(10**(-9)), 50e-9, c)[i]
-        #levels = np.linspace(Z.min(), Z.max(), 100)
         cs = ax.contourf(X, Y, Z, levels=100)
         ax.set_title(f'Terme {i}')
         fig.colorbar(cs, ax=ax)
@@ -68,7 +67,6 @@ def affiche_graph_a2(c, saveName = None):
     for i in np.arange(-100, 101):
         for j in np.arange(-100, 101):
             Z[i+100][j+100] = exp_multipolaire(i*(10**(-9)), j*(10**(-9)),50e-9, c)[6]
-    #levels = np.linspace(Z.min(), Z.max(), 100)
     fig, ax1= plt.subplots(layout='constrained')
     cs = ax1.contourf(X, Y, Z, levels=100)
     ax1.set_title("Somme des 6 premiers termes de l'expansion multipolaire dans le plan X-Y à Z = 50nm", fontsize=12)
@@ -89,7 +87,6 @@ def affiche_graph_b1(c, saveName = None):
         for j in range(-100, 101):
             for k in range(-100, 101):
                 Z[j+100][k+100] = exp_multipolaire(j*(10**(-9)), 50e-9, k*(10**(-9)), c)[i]
-        #levels = np.linspace(Z.min(), Z.max(), 100)
         cs = ax.contourf(X, Y, Z, levels=100)
         ax.set_title(f'Terme {i}')
         fig.colorbar(cs, ax=ax)
@@ -107,7 +104,6 @@ def affiche_graph_b2(c, saveName = None):
     for i in np.arange(-100, 101):
         for j in np.arange(-100, 101):
             Z[i+100][j+100] = exp_multipolaire(i*(10**(-9)),50e-9, j*(10**(-9)), c)[6]
-    #levels = np.linspace(Z.min(), Z.max(), 100)
     fig, ax1= plt.subplots(layout='constrained')
     cs = ax1.contourf(X, Y, Z, levels=100)
     ax1.set_title("Somme des 6 premiers termes de l'expansion multipolaire dans le plan X-Z à Y = 50nm", fontsize=10)
@@ -127,8 +123,7 @@ c = [
     Charge((-5e-9, -5e-9, 0), 1.0e-12)
 ]
 
-print(exp_multipolaire(43e-9, 23e-9, 50e-9, c))
-#affiche_graph_a1(c)
-#affiche_graph_a2(c)
+affiche_graph_a1(c)
+affiche_graph_a2(c)
 affiche_graph_b1(c)
 affiche_graph_b2(c)
