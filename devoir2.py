@@ -43,7 +43,7 @@ def exp_multipolaire(x, y, z, c):
 "affiche les termes n=0 à n=5 dans le plan x-y à z = 50nm"
 def affiche_graph_a1(c,saveName=None):
     fig, axs = plt.subplots(2, 3, figsize=(12, 8), gridspec_kw={'hspace': 0.3, 'wspace': 0.2}, sharex='col', sharey='row')
-    fig.suptitle("6 premiers termes de l'expansion multipolaire", fontsize=12)
+    fig.suptitle("6 premiers termes de l'expansion multipolaire dans le plan X-Y à Z = 50nm", fontsize=12)
     for i, ax in enumerate(axs.flat): 
         X, Y = np.meshgrid(np.arange(-100, 101), np.arange(-100, 101))
         Z = np.zeros((201, 201))
@@ -71,7 +71,7 @@ def affiche_graph_a2(c, saveName = None):
     #levels = np.linspace(Z.min(), Z.max(), 100)
     fig, ax1= plt.subplots(layout='constrained')
     cs = ax1.contourf(X, Y, Z, levels=100)
-    ax1.set_title("Somme des 6 premiers termes de l'expansion multipolaire", fontsize=12)
+    ax1.set_title("Somme des 6 premiers termes de l'expansion multipolaire dans le plan X-Y à Z = 50nm", fontsize=12)
     fig.colorbar(cs, ax=ax1)
     ax1.set_xlabel("X [nm]")
     ax1.set_ylabel("Y [nm]")  
@@ -82,7 +82,7 @@ def affiche_graph_a2(c, saveName = None):
 "affiche les termes n = 0 à n=5 dans le plan x-z à y = 50nm"
 def affiche_graph_b1(c, saveName = None):
     fig, axs = plt.subplots(2, 3, figsize=(12, 8), gridspec_kw={'hspace': 0.3, 'wspace': 0.2}, sharex='col', sharey='row')
-    fig.suptitle("6 premiers termes de l'expansion multipolaire", fontsize=12)
+    fig.suptitle("6 premiers termes de l'expansion multipolaire dans le plan X-Z à Y = 50nm", fontsize=12)
     for i, ax in enumerate(axs.flat):  # Itère sur les sous-graphiques
         X, Y = np.meshgrid(np.arange(-100, 101), np.arange(-100, 101))
         Z = np.zeros((201, 201))
@@ -110,7 +110,7 @@ def affiche_graph_b2(c, saveName = None):
     #levels = np.linspace(Z.min(), Z.max(), 100)
     fig, ax1= plt.subplots(layout='constrained')
     cs = ax1.contourf(X, Y, Z, levels=100)
-    ax1.set_title("Somme des 6 premiers termes de l'expansion multipolaire", fontsize=10)
+    ax1.set_title("Somme des 6 premiers termes de l'expansion multipolaire dans le plan X-Z à Y = 50nm", fontsize=10)
     fig.colorbar(cs, ax=ax1)
     ax1.set_xlabel("X [nm]")
     ax1.set_ylabel("Z [nm]")  
