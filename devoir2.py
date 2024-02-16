@@ -12,7 +12,6 @@ import math
 
 vect3D: TypeAlias = (float, float, float)
 
-cst1 =(1/(4*pi*epsilon_0))
 class Charge:
    def __init__(self,position:vect3D,charge:float):
       self.x = position[0]
@@ -20,8 +19,12 @@ class Charge:
       self.z = position[2]
       self.q = charge
 
-
+#xx
 def exp_multipolaire(x, y, z, c):
+    
+    cst1 =(1/(4*pi*epsilon_0))
+    R = sqrt(x**2 + y**2 + z**2)
+    
     pot = np.zeros(7)
     for i in range(6):
         n = np.zeros(6)
@@ -30,7 +33,7 @@ def exp_multipolaire(x, y, z, c):
             angle = (k.x*x + k.y*y + k.z*z)/(sqrt(k.x**2 + k.y**2 + k.z**2)*sqrt(x**2 + y**2 + z**2))
             pot[i] += k.q * legendre.legval(angle, n, tensor=True) * (sqrt(np.absolute(k.x)**2 + np.absolute(k.y)**2 + np.absolute(k.z) **2))**i
         
-        pot[i] *= cst1 * (1/(sqrt(np.absolute(x)**2 + np.absolute(y)**2 + np.absolute(z)**2))**(i+1))
+        pot[i] *= cst1 * (1/(R)**(i+1))
         pot[6] += pot[i]
     #Les 6 première cases du tableau sont les expansions pour n = 0, 1, 2, 3, 4, 5 et la dernière case est la somme des 6.
     return pot
