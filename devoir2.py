@@ -54,7 +54,7 @@ def affiche_graph(c):
                 Z[j+100][k+100] = exp_multipolaire(j*(10**(-9)), k*(10**(-9)), 50e-9, c)[i+1]  # Utilise i pour accéder à chaque terme de l'expansion
         levels = np.linspace(Z.min(), Z.max(), 100)
         cs = ax.contourf(X, Y, Z, levels=levels)
-        ax.set_title(f'Terme {i}')
+        ax.set_title(f'Terme {i+1}')
         fig.colorbar(cs, ax=ax)
         ax.set_xlabel("X [nm]")
         ax.set_ylabel("Y [nm]")
