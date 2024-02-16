@@ -123,7 +123,7 @@ c = [
     Charge((-5e-9, -5e-9, 0), 1.0e-12)
 ]
 
-affiche_graph_a1(c)
-affiche_graph_a2(c)
-affiche_graph_b1(c)
+#affiche_graph_a1(c)
+#affiche_graph_a2(c)
+#affiche_graph_b1(c)
 affiche_graph_b2(c)
