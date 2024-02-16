@@ -51,7 +51,7 @@ def affiche_graph_a1(c,saveName=None):
         Z = np.zeros((201, 201))
         for j in range(-100, 101):
             for k in range(-100, 101):
-                Z[j+100][k+100] = exp_multipolaire(j*(10**(-9)), k*(10**(-9)), 50e-9, c)[i]  # Utilise i pour accéder à chaque terme de l'expansion
+                Z[j+100][k+100] = exp_multipolaire(j*(10**(-9)), k*(10**(-9)), 50e-9, c)[i+1]  # Utilise i pour accéder à chaque terme de l'expansion
         levels = np.linspace(Z.min(), Z.max(), 100)
         cs = ax.contourf(X, Y, Z, levels=levels)
         ax.set_title(f'Terme {i+1}')
@@ -65,7 +65,22 @@ def affiche_graph_a1(c,saveName=None):
     plt.show()
 
 def affiche_graph_a2(c, saveName = None):
-    pass
+    X, Y = np.meshgrid(np.arange(-100, 101), np.arange(-100, 101))
+    Z = np.zeros((201, 201))
+    for i in np.arange(-100, 101):
+        for j in np.arange(-100, 101):
+            Z[i+100][j+100] = exp_multipolaire(i*(10**(-9)), j*(10**(-9)), 50e-9, c)[6]
+    levels = np.linspace(Z.min(), Z.max(), 100)
+    fig, ax1= plt.subplots(layout='constrained')
+    cs = ax1.contourf(X, Y, Z, levels=levels)
+    ax1.set_title("Figure de la somme des 6 premiers termes de l'expansion multipolaire", fontsize=12)
+    fig.colorbar(cs, ax=ax1)
+    ax1.set_xlabel("X [nm]")
+    ax1.set_ylabel("Y [nm]")  
+    if saveName:
+        plt.savefig(saveName)
+    plt.show()
+
 
 def affiche_graph_b1(c, saveName = None):
     pass
@@ -83,4 +98,4 @@ c = [
 ]
 
 print(exp_multipolaire(43e-9, 23e-9, 50e-9, c))
-affiche_graph_a1(c)  #  (compilation +- 40s)
+affiche_graph_a2(c)  #  (compilation +- 40s)
