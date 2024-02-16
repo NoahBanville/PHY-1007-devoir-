@@ -59,6 +59,7 @@ def affiche_graph(c):
         ax.set_xlabel("X [nm]")
         ax.set_ylabel("Y [nm]")
 
+
     plt.tight_layout()  # Ajuste automatiquement l'espacement entre les sous-graphiques
     plt.show()
 
