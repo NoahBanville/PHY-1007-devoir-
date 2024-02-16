@@ -30,7 +30,8 @@ def exp_multipolaire(x, y, z, c):
         n = np.zeros(6)
         n[i] = 1
         for k in c:
-            angle = (k.x*x + k.y*y + k.z*z)/(sqrt(k.x**2 + k.y**2 + k.z**2)*sqrt(x**2 + y**2 + z**2))
+            Rprime = (sqrt(k.x**2 + k.y**2 + k.z**2))
+            angle = (k.x*x + k.y*y + k.z*z)/(Rprime)/R
             pot[i] += k.q * legendre.legval(angle, n, tensor=True) * (sqrt(np.absolute(k.x)**2 + np.absolute(k.y)**2 + np.absolute(k.z) **2))**i
         
         pot[i] *= cst1 * (1/(R)**(i+1))
