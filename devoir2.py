@@ -3,7 +3,7 @@
 
 from typing import TypeAlias
 import numpy as np
-from numpy import pi, sqrt
+from numpy import pi, sqrt, dot
 from scipy.constants import epsilon_0
 from numpy.polynomial import legendre
 from matplotlib import pyplot as plt
@@ -31,7 +31,7 @@ def exp_multipolaire(x, y, z, c):
         n[i] = 1
         for k in c:
             Rprime = (sqrt(k.x**2 + k.y**2 + k.z**2))
-            angle = (k.x*x + k.y*y + k.z*z)/(Rprime)/R
+            angle = ((dot(x,k.x) + dot(y,k.y) + dot(z,k.z)))/(Rprime)/R
             pot[i] += k.q * legendre.legval(angle, n, tensor=True) * (Rprime)**i
         
         pot[i] *= cst1 * (1/(R)**(i+1))
@@ -74,4 +74,4 @@ c = [
 ]
 
 print(exp_multipolaire(43e-9, 23e-9, 50e-9, c))
-affiche_graph(c)  # il faut être patient, les 6 graphs affichent en mm temps...
+affiche_graph(c)  # il faut être patient (compilation +- 40s)
