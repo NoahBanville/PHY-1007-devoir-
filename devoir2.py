@@ -24,8 +24,8 @@ def exp_multipolaire(x, y, z, c):
     
     cst1 =(1/(4*pi*epsilon_0))
     R = sqrt(x**2 + y**2 + z**2)
-    
     pot = np.zeros(7)
+    
     for i in range(6):
         n = np.zeros(6)
         n[i] = 1
@@ -41,9 +41,9 @@ def exp_multipolaire(x, y, z, c):
 ####
 
 
-def affiche_graph(c):
+def affiche_graph(c,saveName=None):
     fig, axs = plt.subplots(2, 3, figsize=(12, 8), gridspec_kw={'hspace': 0.3, 'wspace': 0.2}, sharex='col', sharey='row')
-    fig.suptitle("Figures des premiers termes de l'expansion multipolaire", fontsize=16)
+    fig.suptitle("Figures des premiers termes de l'expansion multipolaire", fontsize=12)
      # Crée une grille de sous-graphiques 2x3
     
     for i, ax in enumerate(axs.flat):  # Itère sur les sous-graphiques
@@ -59,8 +59,9 @@ def affiche_graph(c):
         ax.set_xlabel("X [nm]")
         ax.set_ylabel("Y [nm]")
 
-
     plt.tight_layout()  # Ajuste automatiquement l'espacement entre les sous-graphiques
+    if saveName:
+        plt.savefig(saveName)
     plt.show()
 
 
