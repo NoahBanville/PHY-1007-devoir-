@@ -41,7 +41,7 @@ def exp_multipolaire(x, y, z, c):
 ####
 
 
-def affiche_graph(c,saveName=None):
+def affiche_graph_a1(c,saveName=None):
     fig, axs = plt.subplots(2, 3, figsize=(12, 8), gridspec_kw={'hspace': 0.3, 'wspace': 0.2}, sharex='col', sharey='row')
     fig.suptitle("Figures des premiers termes de l'expansion multipolaire", fontsize=12)
      # Crée une grille de sous-graphiques 2x3
@@ -51,7 +51,7 @@ def affiche_graph(c,saveName=None):
         Z = np.zeros((201, 201))
         for j in range(-100, 101):
             for k in range(-100, 101):
-                Z[j+100][k+100] = exp_multipolaire(j*(10**(-9)), k*(10**(-9)), 50e-9, c)[i+1]  # Utilise i pour accéder à chaque terme de l'expansion
+                Z[j+100][k+100] = exp_multipolaire(j*(10**(-9)), k*(10**(-9)), 50e-9, c)[i]  # Utilise i pour accéder à chaque terme de l'expansion
         levels = np.linspace(Z.min(), Z.max(), 100)
         cs = ax.contourf(X, Y, Z, levels=levels)
         ax.set_title(f'Terme {i+1}')
@@ -64,6 +64,14 @@ def affiche_graph(c,saveName=None):
         plt.savefig(saveName)
     plt.show()
 
+def affiche_graph_a2(c, saveName = None):
+    pass
+
+def affiche_graph_b1(c, saveName = None):
+    pass
+
+def affiche_graph_b2(c, saveName = None):
+    pass
 
     
 # Charges 
@@ -75,4 +83,4 @@ c = [
 ]
 
 print(exp_multipolaire(43e-9, 23e-9, 50e-9, c))
-affiche_graph(c)  #  (compilation +- 40s)
+affiche_graph_a1(c)  #  (compilation +- 40s)
