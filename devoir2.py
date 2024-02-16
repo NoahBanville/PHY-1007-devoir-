@@ -98,4 +98,7 @@ c = [
 ]
 
 print(exp_multipolaire(43e-9, 23e-9, 50e-9, c))
-affiche_graph_a1(c)  #  (compilation +- 40s)
+#affiche_graph_a1(c)
+affiche_graph_a2(c)
+#affiche_graph_b1(c)
+#affiche_graph_b2(c)
