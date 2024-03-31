@@ -1,0 +1,70 @@
+from typing import TypeAlias
+import numpy as np
+from numpy import pi, sqrt, dot, sin
+from numpy.polynomial import legendre
+from matplotlib import pyplot as plt
+from matplotlib import rcParams
+from scipy.integrate import quad
+from scipy.special import jv
+import math
+
+def f1(x, i):
+    return x**(3/2) * jv(0.5, (i + 1) * pi * x**3) * x**8
+    #return sqrt(2/((2*i + 1) * pi**2 * x**3)) * sin((2*i + 1) * pi * x**3) * x**8
+
+def f2(x, i):
+    return x**(3/2) * (jv(0.5, (i + 1) * pi * x**3))**2 * x**8
+    #return (2 * x**5)/(((2*i + 1)) * pi**2) * (sin((2*i + 1) * pi * x**3))**2
+
+
+def f3(x):
+    y = 0
+    for i in range(1000):
+        y += (quad(f1, 0, 0.5, i)[0]/quad(f2, 0, 1, i)[0]) * jv(0.5, (i + 1) * pi * x**3)
+    return y
+
+def f4(x):
+    y = 0
+    for i in range(500):
+        y += (quad(f1, 0, 0.5, i)[0]/quad(f2, 0, 1, i)[0]) * jv(0.5, (i + 1) * pi * x**3)
+    return y
+def f5(x):
+    y = 0
+    for i in range(100):
+        y += (quad(f1, 0, 0.5, i)[0]/quad(f2, 0, 1, i)[0]) * jv(0.5, (i + 1) * pi * x**3)
+    return y
+
+def f6(x):
+    y = 0
+    for i in range(50):
+        y += (quad(f1, 0, 0.5, i)[0]/quad(f2, 0, 1, i)[0]) * jv(0.5, (i + 1) * pi * x**3)
+    return y
+
+def f7(x):
+    y = 0
+    for i in range(10):
+        y += (quad(f1, 0, 0.5, i)[0]/quad(f2, 0, 1, i)[0]) * jv(0.5, (i + 1) * pi * x**3)
+    return y
+
+
+
+
+x = np.linspace(0, 1, 100000)
+
+y1 = f3(x)
+y2 = f4(x)
+y3 = f5(x)
+y4 = f6(x)
+y5 = f7(x)
+
+# Plot both functions
+fig, ax = plt.subplots()
+ax.plot(x, y1)
+ax.plot(x, y2)
+ax.plot(x, y3)
+ax.plot(x, y4)
+ax.plot(x, y5)
+ax.set_xlim(0, 1)
+ax.set_ylim(-0.1, 1.1)
+plt.legend()
+plt.show()
