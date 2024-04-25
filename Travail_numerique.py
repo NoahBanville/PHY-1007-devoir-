@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-#initialisation du détecteur
+#Initialisation du détecteur
 detecteur = np.full((61, 121), 50.0)
 for i in range(30, 121):
     detecteur[0, i] = -300
@@ -25,7 +25,10 @@ for i in range(1, 45):
     detecteur[30, i] = -150
 
 #Calculer le potentiel
-for i in range(1000):
+différence = 0.0001
+
+for i in range(100000):
+    a = detecteur[45, 38]
     for x in range(121):
         for y in range(61):
             if detecteur[y, x] != 0 and detecteur[y, x] != 50 and detecteur[y, x] != -300 :
@@ -33,7 +36,9 @@ for i in range(1000):
                     detecteur[y, x] = (detecteur[y, x+1] + detecteur[y, x-1])/2
                 else :
                     detecteur[y, x] = (detecteur[y+1, x] + detecteur[y-1, x] + detecteur[y, x+1] + detecteur[y, x-1])/4 + (detecteur[y+1, x] - detecteur[y-1, x])/(8*(30-y))
-    print((i*100)/1000, "%")
+    if (abs(a-detecteur[45,38]))*100 < différence and i > 100:
+        print("Nombre d'itérations : ", i)
+        break
 
 #afficher détecteur
 masked_array = np.ma.masked_where(detecteur == 50, detecteur)
@@ -42,6 +47,6 @@ cmap.set_bad(color='white')
 plt.imshow( masked_array, cmap = 'plasma' )
 plt.colorbar()
 plt.title('Potentiel dans le détecteur [r-z]')
-plt.xlabel('z [10^-4 m]')
-plt.ylabel('r [10^-4 m]')
+plt.xlabel("z [1e-4 m]")
+plt.ylabel('r [1e-4 m]')
 plt.show()
