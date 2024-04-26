@@ -25,9 +25,9 @@ for i in range(1, 45):
     detecteur[30, i] = -150
 
 #Calculer le potentiel
-différence = 0.1
+différence = 0.001
 
-for i in range(100000):
+for i in range(1000000):
     a = detecteur[45, 38]
     for x in range(121):
         for y in range(61):
@@ -36,18 +36,16 @@ for i in range(100000):
                     detecteur[y, x] = (detecteur[y, x+1] + detecteur[y, x-1])/2
                 else :
                     detecteur[y, x] = (detecteur[y+1, x] + detecteur[y-1, x] + detecteur[y, x+1] + detecteur[y, x-1])/4 + (detecteur[y+1, x] - detecteur[y-1, x])/(8*(30-y))
-    #if (abs(a-detecteur[45,38]))*100 < différence and i > 100:
-        #print("Nombre d'itérations : ", i)
-        #break
-    print((i*100)/100000, "%")
+    if (abs(a-detecteur[45,38]))*100 < différence and i > 100:
+        #afficher détecteur
 
-#afficher détecteur
-masked_array = np.ma.masked_where(detecteur == 50, detecteur)
-cmap = matplotlib.cm.spring
-cmap.set_bad(color='white')
-plt.imshow( masked_array, cmap = 'plasma' )
-plt.colorbar()
-plt.title('Potentiel dans le détecteur [r-z]  (100000 itérations)')
-plt.xlabel("z [1e-4 m]")
-plt.ylabel('r [1e-4 m]')
-plt.show()
+        masked_array = np.ma.masked_where(detecteur == 50, detecteur)
+        cmap = matplotlib.cm.spring
+        cmap.set_bad(color='white')
+        plt.imshow( masked_array, cmap = 'plasma' )
+        plt.colorbar()
+        plt.title(f'Potentiel dans le détecteur [r-z]  ({i} itérations)')
+        plt.xlabel("z [1e-4 m]")
+        plt.ylabel('r [1e-4 m]')
+        plt.show()
+        break
