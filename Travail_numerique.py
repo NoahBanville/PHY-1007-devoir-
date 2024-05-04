@@ -25,7 +25,7 @@ for i in range(1, 45):
     detecteur[30, i] = -150
 
 #Calculer le potentiel
-différence = 0.0001
+différence = 0.001
 
 for i in range(1000000):
     a = detecteur[45, 38]
